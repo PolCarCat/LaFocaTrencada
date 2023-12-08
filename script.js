@@ -2,56 +2,44 @@ const btnStart=document.querySelector('.start');
 const btnStop=document.querySelector('.stop');
 const btnReset=document.querySelector('.reset');
 
-let hrs=min=sec=ms=0,startTimer;
+let days=hrs=min=sec=ms=0,startTimer, updateTimer;
 
-btnStart.addEventListener('click',()=>{
 
-  btnStart.classList.add('start-active');
-  btnStop.classList.remove('stop-active');
+SetDate();
 
-  startTimer=setInterval(()=>{
-    ms++;//ms=ms+1;
-    if(ms==100){
-      sec++;
-      ms=0;
-    }
-    if(sec==60){
-      min++;
-      sec=0;
-    }
-    if(min==60){
-      hrs++;
-      min=0;
-    }
+function SetDate(){
+
+  updateTimer=setInterval(()=>{
     updateDisplay();
-  },10);
-});
+  },1000);
 
-btnStop.addEventListener('click',()=>{
-  clearInterval(startTimer);
-  btnStart.classList.remove('start-active');
-  btnStop.classList.add('stop-active');
-
-});
-
-btnReset.addEventListener('click',()=>{
-  hrs=min=sec=ms=0;
-  clearInterval(startTimer);
-  updateDisplay();
-  btnStart.classList.remove('start-active');
-  btnStop.classList.remove('stop-active');
-});
-
+}
 
 function updateDisplay(){
+
+  var date = new Date();
+  var d = date.split(" ");
+
+  var day = d[1];
+
+  var time = d[4].split(":");
+  var hour = time[0];
+  var minute = time[1];
+  var second = time[2];
+
+
   //Formated Display
-  phrs=hrs<10?'0'+hrs:hrs;
-  pmin=min<10?'0'+min:min;
-  psec=sec<10?'0'+sec:sec;
-  pms=ms<10?'0'+ms:ms;
+  pdays= day;
+  phrs= hour;
+  pmin= minute;
+  psec=second;
+
   //Output
+  document.querySelector('.days').innerText=pdays;
   document.querySelector('.hrs').innerText=phrs;
   document.querySelector('.min').innerText=pmin;
   document.querySelector('.sec').innerText=psec;
-  document.querySelector('.ms').innerText=pms;
+
 }
+
+
